@@ -1,0 +1,75 @@
+<div class="wrapper">
+  <div class="section-home">
+    <div class="header-graficas">
+      <app-navbar></app-navbar>
+    </div>
+
+    <div class="body-home">
+      <div class="row mt-5 mb-5">
+        <div class="col-12">
+          <span class="title-perfil">Análisis de datos del sistema</span>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row mt-3 mb-5 text-center">
+          <div class="col-12">
+            <div class="alert alert-primary">
+              <span class="title-table">Análisis de usuarios</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row w-100 text-center">
+          <div class="col-6 graph">
+            <canvas
+              baseChart
+              [type]="'line'"
+              [data]="lineChartData"
+              [plugins]="lineChartPlugins"
+              [options]="lineChartOption">
+            </canvas>
+          </div>
+          <div class="col-6 graph">
+            <canvas
+              baseChart
+              [type]="'bar'"
+              [data]="barChartData"
+              [plugins]="barChartPlugins"
+              [options]="barChartOption">
+            </canvas>
+          </div>
+        </div>
+
+        <div class="row mt-3 mb-5 text-center">
+          <div class="col-12">
+            <div class="alert alert-primary">
+              <span class="title-table">Análisis de usuarios</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row w-100 text-center">
+          <div class="col-6 graph">
+            <canvas
+              baseChart
+              [type]="'pie'"
+              [data]="pieChartData"
+              [plugins]="pieChartPlugins"
+              [options]="pieChartOption">
+            </canvas>
+          </div>
+          <div class="col-6 graph">
+            <canvas
+              baseChart
+              [type]="'doughnut'"
+              [data]="doughnutChartData"
+              [plugins]="doughnutChartPlugins"
+              [options]="doughnutChartOption">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="wrapper">
+  <div class="header-home">
+    <app-navbar></app-navbar>
+  </div>
+
+  <div class="body-admin">
+    <div class="row mt-5 mb-5">
+      <div class="col-12">
+        <span class="title-perfil">Lista de Eventos Académicos</span>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mt-3 mb-3">
+        <div class="col-12">
+          <div class="alert alert-primary" role="alert">
+            <span class="title-table">Eventos registrados</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla de eventos con mat-table -->
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+
+        <!-- Nombre -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let evento">{{ evento.nombre }}</td>
+        </ng-container>
+
+        <!-- Tipo -->
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef>Tipo</th>
+          <td mat-cell *matCellDef="let evento">{{ evento.tipo }}</td>
+        </ng-container>
+
+        <!-- Fecha -->
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let evento">{{ evento.fecha }}</td>
+        </ng-container>
+
+        <!-- Hora -->
+        <ng-container matColumnDef="horario">
+          <th mat-header-cell *matHeaderCellDef>Horario</th>
+          <td mat-cell *matCellDef="let evento">{{ evento.hora_inicio }} - {{ evento.hora_fin }}</td>
+        </ng-container>
+
+        <!-- Lugar -->
+        <ng-container matColumnDef="lugar">
+          <th mat-header-cell *matHeaderCellDef>Lugar</th>
+          <td mat-cell *matCellDef="let evento">{{ evento.lugar }}</td>
+        </ng-container>
+
+        <!-- Responsable -->
+<!-- Responsable -->
+<ng-container matColumnDef="responsable">
+  <th mat-header-cell *matHeaderCellDef>Responsable</th>
+  <td mat-cell *matCellDef="let evento">
+    {{ evento.responsable_nombre || (evento.responsable?.first_name + ' ' + evento.responsable?.last_name) }}
+  </td>
+</ng-container>
+
+        <!-- Ver -->
+<ng-container matColumnDef="ver">
+  <th mat-header-cell *matHeaderCellDef>Ver</th>
+  <td mat-cell *matCellDef="let evento" class="td-ver">
+    <button mat-button color="primary" (click)="verEvento(evento)">Ver</button>
+  </td>
+</ng-container>
+
+
+
+        <!-- Editar -->
+        <ng-container matColumnDef="editar">
+          <th mat-header-cell *matHeaderCellDef>Editar</th>
+          <td mat-cell *matCellDef="let evento" class="td-editar">
+            <i class="bi bi-pencil-square" (click)="editarEvento(evento)"></i>
+          </td>
+        </ng-container>
+
+        <!-- Eliminar -->
+        <ng-container matColumnDef="eliminar">
+          <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+          <td mat-cell *matCellDef="let evento" class="td-eliminar">
+            <i class="bi bi-trash3-fill" (click)="eliminarEvento(evento.id)"></i>
+          </td>
+        </ng-container>
+
+        <!-- Header & Row -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <!-- Paginación -->
+      <mat-paginator [length]="dataSource.data.length"
+                     [pageSize]="5"
+                     [pageSizeOptions]="[5, 10, 20]">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

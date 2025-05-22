@@ -1,0 +1,107 @@
+<div class="wrapper">
+  <div class="header-home">
+    <app-navbar></app-navbar>
+  </div>
+
+  <div class="body-admin">
+    <div class="container mt-4">
+      <h2 class="mb-4">{{ eventoForm.get('id')?.value ? 'Editar Evento' : 'Registrar Evento' }}</h2>
+
+      <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+        <input type="hidden" formControlName="id" />
+
+        <div class="form-group">
+          <label>Nombre del Evento</label>
+          <input type="text" class="form-control" formControlName="nombre" pattern="[a-zA-Z0-9\s]*" title="Solo letras, números y espacios" />
+        </div>
+
+        <div class="form-group">
+          <label>Tipo de Evento</label>
+          <select class="form-control" formControlName="tipo">
+            <option value="Conferencia">Conferencia</option>
+            <option value="Taller">Taller</option>
+            <option value="Seminario">Seminario</option>
+            <option value="Concurso">Concurso</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" class="form-control" formControlName="fecha" [min]="minDate | date:'yyyy-MM-dd'" />
+        </div>
+
+        <div class="form-group">
+          <label>Hora de Inicio</label>
+          <input matInput [ngxMatTimepicker]="inicioPicker" formControlName="hora_inicio" class="form-control" readonly>
+          <ngx-mat-timepicker #inicioPicker></ngx-mat-timepicker>
+        </div>
+
+        <div class="form-group">
+          <label>Hora de Fin</label>
+          <input matInput [ngxMatTimepicker]="finPicker" formControlName="hora_fin" class="form-control" readonly>
+          <ngx-mat-timepicker #finPicker></ngx-mat-timepicker>
+        </div>
+
+        <div *ngIf="invalidHorario" class="alert alert-danger">
+          La hora de inicio debe ser menor que la de fin.
+        </div>
+
+        <div class="form-group">
+          <label>Lugar</label>
+          <input type="text" class="form-control" formControlName="lugar" pattern="[a-zA-Z0-9\s]*" title="Solo letras, números y espacios" />
+        </div>
+
+        <div class="form-group">
+          <label>Público</label>
+          <select class="form-control" formControlName="publico">
+            <option value="Estudiantes">Estudiantes</option>
+            <option value="Docentes">Docentes</option>
+            <option value="Todos">Todos</option>
+          </select>
+        </div>
+
+        <div class="form-group" *ngIf="eventoForm.get('publico')?.value === 'Estudiantes'">
+          <label>Programa Educativo</label>
+          <select class="form-control" formControlName="programa">
+            <option value="">Selecciona una opción</option>
+            <option value="Ingeniería en Ciencias de la Computación">Ingeniería en Ciencias de la Computación</option>
+            <option value="Licenciatura en Ciencias de la Computación">Licenciatura en Ciencias de la Computación</option>
+            <option value="Ingeniería en Tecnologías de la Información">Ingeniería en Tecnologías de la Información</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Responsable</label>
+          <select class="form-control" formControlName="responsable">
+            <option *ngFor="let resp of responsables" [value]="resp.id">
+              {{ resp.first_name }} {{ resp.last_name }} ({{ resp.rol }})
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea rows="4" class="form-control" formControlName="descripcion" maxlength="300" (input)="descripcionLength = eventoForm.get('descripcion')?.value.length"></textarea>
+          <small class="text-muted">{{ descripcionLength || 0 }}/300 caracteres</small>
+        </div>
+
+        <div class="form-group">
+          <label>Cupo Máximo</label>
+          <input type="number" class="form-control" formControlName="cupo" pattern="[0-9]*" inputmode="numeric" />
+        </div>
+
+        <div class="text-center mt-4">
+          <button *ngIf="!modoLectura" type="submit" class="btn btn-primary">
+            {{ eventoForm.get('id')?.value ? 'Actualizar Evento' : 'Registrar Evento' }}
+          </button>
+
+          <button *ngIf="modoLectura" class="btn btn-secondary" routerLink="/lista-eventos">
+            Regresar
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
